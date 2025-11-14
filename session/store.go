@@ -9,6 +9,10 @@ type Store[T any] interface {
 	Get(id string) (Session[T], error)
 	Set(id string, sess Session[T]) error
 	Del(id string) error
+
+	// TODO: Touch should be throttled/and minimize network requests
+	// i.e. calculate a frequency to update the session in the instance
+	// that only the expires time will change
 	// Touch(id string) error
 	// RegenerateID(id string) (string, error)
 	// Clear() error
@@ -19,8 +23,8 @@ type MemorySessionStore[T any] struct {
 	store map[string]Session[T]
 }
 
-func NewMemorySessionStore[T any]() MemorySessionStore[T] {
-	return MemorySessionStore[T]{
+func NewMemorySessionStore[T any]() *MemorySessionStore[T] {
+	return &MemorySessionStore[T]{
 		store: make(map[string]Session[T]),
 	}
 }

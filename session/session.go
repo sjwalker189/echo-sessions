@@ -13,6 +13,7 @@ type Session[T any] struct {
 	ID     string       `json:"id"`
 	Cookie *http.Cookie `json:"cookie"`
 	Data   *T           `json:"data"`
+	store  *Store[T]
 }
 
 func (s Session[T]) Empty() bool {
