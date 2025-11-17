@@ -1,44 +1,45 @@
 package session
 
 import (
+	"app/types"
+
 	"github.com/labstack/echo/v4"
 )
 
 type AuthUser struct {
-	ID    string
-	Name  string
-	Email string
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 type FlashMessage struct {
-	Type    string
-	Message string
+	Type    string `json:"type"`
+	Message string `json:"message"`
 }
 
 type FormErrors map[string]string
 
-type SessionData struct {
-	Value   int
-	User    *AuthUser
-	Flashes []FlashMessage
-	Errors  FormErrors
+type Data struct {
+	User       *AuthUser                     `json:"user"`
+	Flashes    []FlashMessage                `json:"flashes"`
+	FormErrors types.HashMap[string, string] `json:"formErrors"`
 }
 
-func NewSessionData() SessionData {
-	return SessionData{
-		Flashes: make([]FlashMessage, 0),
-		Errors:  make(FormErrors),
+func NewData() Data {
+	return Data{
+		Flashes:    make([]FlashMessage, 0),
+		FormErrors: make(types.HashMap[string, string]),
 	}
 }
 
-func (s *SessionData) Flash(msg FlashMessage) {
+func (s *Data) Flash(msg FlashMessage) {
 	s.Flashes = append(s.Flashes, msg)
 }
 
-func (s *SessionData) Authenticated() bool {
-	return s.User != nil
+func Default(c echo.Context) *Session[Data] {
+	return UseSessionByName[Data](c, DefaultCookieName)
 }
 
-func DefaultSession(c echo.Context) *Session[SessionData] {
-	return UseSessionByName[SessionData](c, DefaultCookieName)
+func (s *Data) Authenticated() bool {
+	return s.User != nil
 }

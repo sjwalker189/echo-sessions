@@ -1,0 +1,41 @@
+#
+# Build commands
+#
+
+gen:
+	go generate ./ent
+	templ generate
+
+run:
+	go run main.go
+
+build:
+	go build main.go -o build/app
+	
+css:
+	npx @tailwindcss/cli -i ./web/assets/site.css -o ./public/site.css
+
+
+#
+# Development commands
+#
+
+live/templ:
+	templ generate --watch --proxy="http://localhost:3333" --open-browser=false
+
+live/server:
+	air
+	
+live/sync_assets:
+	air \
+		--build.cmd "templ generate --notify-proxy" \
+		--build.bin "true" \
+		--build.exclude_dir "" \
+		--build.include_dir "public" \
+		--build.include_ext "js,css"
+
+live/css:
+	./node_modules/.bin/tailwindcss -i ./web/assets/site.css -o ./public/site.css --watch
+
+dev: 
+	make -j5 live/templ live/server live/sync_assets live/css

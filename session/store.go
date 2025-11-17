@@ -11,8 +11,6 @@ type Store[T any] interface {
 	Del(id string) error
 
 	// TODO: Touch should be throttled/and minimize network requests
-	// i.e. calculate a frequency to update the session in the instance
-	// that only the expires time will change
 	// Touch(id string) error
 	// RegenerateID(id string) (string, error)
 	// Clear() error

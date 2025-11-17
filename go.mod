@@ -6,6 +6,7 @@ require github.com/labstack/echo/v4 v4.13.4
 
 require (
 	dario.cat/mergo v1.0.2 // indirect
+	github.com/a-h/templ v0.3.960
 	github.com/air-verse/air v1.63.0 // indirect
 	github.com/bep/godartsass/v2 v2.5.0 // indirect
 	github.com/bep/golibsass v1.2.0 // indirect

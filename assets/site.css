@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+
+@theme {
+	--font-sans:
+		"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@layer base {
+	::selection {
+		@apply bg-blue-100 text-blue-900;
+	}
+
+	html {
+		-webkit-tap-highlight-color: transparent;
+		scroll-behavior: smooth;
+	}
+}
+
+@layer components {
+	@import "./css/components.css";
+
+	/* Forms */
+	.form-field {
+		@apply block space-y-0.5;
+	}
+
+	.form-label {
+		@apply block font-bold text-sm select-none;
+	}
+
+	.form-control {
+		@apply block rounded border-gray-800/20 shadow py-3 px-4 w-full hover:border-gray-800/30 focus:border-blue-600 duration-75;
+	}
+
+	.input {
+		@apply rounded-md border-gray-300 shadow-sm focus:border-blue-500;
+	}
+}
+
+@layer utilities {
+	.prose img {
+		user-drag: none;
+		-webkit-user-drag: none;
+	}
+}

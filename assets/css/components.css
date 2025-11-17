@@ -1,0 +1,72 @@
+.wrapper {
+	@apply w-full mx-auto px-3 max-w-6xl;
+}
+
+.wrapper-sm {
+	@apply max-w-xl;
+}
+
+.wrapper-prose {
+	@apply max-w-prose;
+}
+
+.section {
+	@apply bg-white min-h-[360px] px-3 md:px-8 py-8 lg:pt-12 pb-20;
+}
+
+.section-base {
+	@apply py-8 lg:pt-12 pb-20;
+}
+
+.section-hero {
+	@apply pb-20 pt-48;
+}
+
+.section-lg {
+	@apply py-8 md:py-20 xl:py-32;
+}
+
+.section-white {
+	@apply bg-white;
+}
+
+.section-gray {
+	@apply bg-[#EDF1F5];
+}
+
+.section-midnight-blue {
+	@apply bg-gradient-to-r to-[#07116E] via-[#0A0D29] from-[#0A0D29] text-white;
+}
+
+.section-midnight {
+	@apply bg-gradient-to-br to-[#07116E] via-[#0A0D29] from-[#0A0D29] text-white;
+}
+
+.section-electric-blue {
+	@apply bg-gradient-to-br from-blue-600 to-[#000B6C] text-white;
+}
+
+.heading {
+	@apply font-bold leading-normal block text-lg;
+}
+
+.heading-xl {
+	@apply text-4xl/tight lg:text-5xl;
+}
+
+.heading-lg {
+	@apply text-3xl lg:text-4xl;
+}
+
+.heading-md {
+	@apply text-3xl;
+}
+
+.heading-sm {
+	@apply text-2xl;
+}
+
+.heading-xs {
+	@apply text-lg;
+}
+
