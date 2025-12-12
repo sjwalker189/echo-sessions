@@ -1,0 +1,20 @@
+version: "2"
+cloud:
+    organization: ""
+    project: ""
+    hostname: ""
+servers: []
+sql: 
+  - engine: "sqlite"
+    queries: "sql/queries.sql"
+    schema: "sql/migrations"
+    gen:
+      go:
+        package: "db"
+        out: "db"
+
+overrides:
+    go: null
+plugins: []
+rules: []
+options: {}

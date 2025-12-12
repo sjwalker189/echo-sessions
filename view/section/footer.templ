@@ -1,0 +1,128 @@
+package section
+
+import (
+	"fmt"
+	"time"
+)
+
+type Company struct {
+	Name        string
+	PhoneNumber string
+	Email       string
+	FacebookUrl string
+}
+
+templ Footer(c Company) {
+	<div class="wrapper pt-6 md:pt-12">
+		<img width="40" height="40" lazy src="/static/img/brand_compact.svg" alt="Rodney Joinery Services Compact Logo"/>
+	</div>
+	<div class="wrapper py-12">
+		<div class="grid grid-cols-12 gap-6 gap-y-12 lg:gap-y-6">
+			<div class="col-span-12 lg:col-span-5">
+				<h5 class="heading heading-xs">{ c.Name }</h5>
+				<ul class="text-base font-medium space-y-2 pt-2">
+					<li>
+						<span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								class="mr-1 w-5 h-5 inline-block text-gray-300 align-middle"
+								aria-hidden="true"
+								role="presentation"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+									clip-rule="evenodd"
+								></path>
+							</svg>
+							<a href={ fmt.Sprintf("tel:%s", c.PhoneNumber) } class="hover:underline underline-offset-2">
+								{ c.PhoneNumber }
+							</a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								class="mr-1 w-5 h-5 inline-block text-gray-300 align-middle"
+								aria-hidden="true"
+								role="presentation"
+							>
+								<path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"></path>
+								<path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"></path>
+							</svg>
+							<a href={ fmt.Sprintf("mailto:%s", c.Email) } class="hover:underline underline-offset-2">
+								{ c.Email }
+							</a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<svg
+								class="mr-1 w-5 h-5 inline-block text-gray-300 align-middle"
+								aria-hidden="true"
+								fill="currentColor"
+								role="presentation"
+								width="200px"
+								height="200px"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+								<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+								<g id="SVGRepo_iconCarrier">
+									<path
+										d="M12.001 2.002c-5.522 0-9.999 4.477-9.999 9.999 0 4.99 3.656 9.126 8.437 9.879v-6.988h-2.54v-2.891h2.54V9.798c0-2.508 1.493-3.891 3.776-3.891 1.094 0 2.24.195 2.24.195v2.459h-1.264c-1.24 0-1.628.772-1.628 1.563v1.875h2.771l-.443 2.891h-2.328v6.988C18.344 21.129 22 16.992 22 12.001c0-5.522-4.477-9.999-9.999-9.999z"
+									></path>
+								</g>
+							</svg>
+							<a
+								href={ c.FacebookUrl }
+								target="_blank"
+								rel="nofollow noopener"
+								class="hover:underline underline-offset-2"
+							>
+								Facebook
+							</a>
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="col-span-12 sm:col-span-6 lg:col-span-3">
+				<h5 class="heading heading-xs">About</h5>
+				<ul class="font-medium space-y-2 pt-2">
+					<li>
+						<a href="/quote" class="hover:underline underline-offset-2">Contact</a>
+					</li>
+					<li>
+						<a href="/testimonials" class="hover:underline underline-offset-2">Testimonials</a>
+					</li>
+					<li>
+						<a href="/faq" class="hover:underline underline-offset-2">FAQ</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-span-12 sm:col-span-6 lg:col-span-4">
+				<h5 class="heading heading-xs">Open Hours</h5>
+				<ul class="font-medium space-y-2 pt-2">
+					<li>
+						Monday to Friday
+					</li>
+					<li>
+						8:00am to 5:00pm
+					</li>
+					<li class="text-gray-500 text-sm">
+						*Appointment outside these hours by prior arrangement.
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper border-t text-center py-6 text-sm text-gray-500 border-t-gray-200">
+		<span>&copy; { time.Now().Year() } { c.Name }. All Rights Reserved. </span>
+	</div>
+}

@@ -1,26 +1,49 @@
 package session
 
 import (
+	"app/types"
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
-	"time"
+	"net/url"
+
+	"github.com/labstack/echo/v4"
 )
 
-const DefaultCookieName = "session"
+const sessionCookieName = "session"
 
-type Session[T any] struct {
-	ID     string       `json:"id"`
-	Cookie *http.Cookie `json:"cookie"`
-	Data   *T           `json:"data"`
-	store  *Store[T]
+type Session struct {
+	ID         string                         `json:"id"`
+	Cookie     *http.Cookie                   `json:"cookie"`
+	User       *AuthUser                      `json:"user"`
+	Flashes    []FlashMessage                 `json:"flashes"`
+	FormErrors *types.HashMap[string, string] `json:"formErrors"`
+	FormValues *url.Values                    `json:"formValues"`
 }
 
-func (s Session[T]) Empty() bool {
-	return s.Data == nil
+func New() Session {
+	cookie := NewSessionCookie(sessionCookieName)
+	errors := make(types.HashMap[string, string])
+	return Session{
+		ID:         cookie.Value,
+		Cookie:     cookie,
+		FormErrors: &errors,
+	}
 }
 
-func (s *Session[T]) RegenerateID() {
+func (s *Session) Authenticated() bool {
+	return s.User != nil
+}
+
+func (s *Session) Logout() {
+	s.User = nil
+}
+
+func (s *Session) Flash(msg FlashMessage) {
+	s.Flashes = append(s.Flashes, msg)
+}
+
+func (s *Session) RegenerateID() {
 	id := NewSessionId()
 	s.ID = id
 	if s.Cookie != nil {
@@ -28,41 +51,23 @@ func (s *Session[T]) RegenerateID() {
 	}
 }
 
-func NewSession[T any]() Session[T] {
-	cookie := NewSessionCookie(DefaultCookieName)
-	return Session[T]{
-		ID:     cookie.Value,
-		Cookie: cookie,
-		Data:   new(T),
-	}
-}
-
-func NewSessionWithData[T any](data T) Session[T] {
-	cookie := NewSessionCookie(DefaultCookieName)
-	return Session[T]{
-		ID:     cookie.Value,
-		Cookie: cookie,
-		Data:   &data,
-	}
+func (s *Session) Flush() {
+	errors := make(types.HashMap[string, string])
+	s.FormErrors = &errors
+	s.FormValues = nil
+	s.Flashes = make([]FlashMessage, 0)
 }
 
 func NewSessionId() string {
-	// Generate 32 random bytes
 	b := make([]byte, 32)
 	rand.Read(b)
-	sessionID := base64.URLEncoding.EncodeToString(b)
-	return sessionID
+	return base64.URLEncoding.EncodeToString(b)
 }
 
-func NewSessionCookie(name string) *http.Cookie {
-	id := NewSessionId()
-
-	cookie := new(http.Cookie)
-	cookie.Path = "/"
-	cookie.Name = name
-	cookie.Value = id
-	cookie.Expires = time.Now().Add(24 * time.Hour)
-	cookie.HttpOnly = true
-
-	return cookie
+func Default(c echo.Context) *Session {
+	store, ok := c.Get(sessionContextKey(sessionCookieName)).(*Session)
+	if !ok {
+		panic("Session is not present on the request. Did you forget to attach the session middleware?")
+	}
+	return store
 }

@@ -19,3 +19,11 @@ func (m HashMap[K, V]) Set(key K, val V) {
 func (m HashMap[K, V]) Del(key K) {
 	delete(m, key)
 }
+
+func (m HashMap[K, V]) Size() int {
+	return len(m)
+}
+
+func (m HashMap[K, V]) Empty() bool {
+	return len(m) == 0
+}

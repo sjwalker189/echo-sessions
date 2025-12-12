@@ -1,0 +1,22 @@
+package pages
+
+type FormFieldProps struct {
+	Label string
+	Error string
+	Desc  string
+}
+
+templ FormField(props FormFieldProps) {
+	<div class="form-field">
+		<label class="contents">
+			<div class="font-medium text-sm/loose text-gray-700">{ props.Label }</div>
+			if props.Desc != "" {
+				<div class="text-sm/relaxed text-gray-600">{ props.Error }</div>
+			}
+			{ children... }
+		</label>
+		if props.Error != "" {
+			<div class="text-sm/relaxed text-red-700">{ props.Error }</div>
+		}
+	</div>
+}

@@ -5,9 +5,9 @@ import (
 	"sync"
 )
 
-type Store[T any] interface {
-	Get(id string) (Session[T], error)
-	Set(id string, sess Session[T]) error
+type Store interface {
+	Get(id string) (Session, error)
+	Set(id string, sess Session) error
 	Del(id string) error
 
 	// TODO: Touch should be throttled/and minimize network requests
@@ -16,46 +16,46 @@ type Store[T any] interface {
 	// Clear() error
 }
 
-type MemorySessionStore[T any] struct {
+type MemorySessionStore struct {
 	mu    sync.Mutex
-	store map[string]Session[T]
+	store map[string]Session
 }
 
-func NewMemorySessionStore[T any]() *MemorySessionStore[T] {
-	return &MemorySessionStore[T]{
-		store: make(map[string]Session[T]),
+func NewMemorySessionStore() *MemorySessionStore {
+	return &MemorySessionStore{
+		store: make(map[string]Session),
 	}
 }
 
-func (s *MemorySessionStore[T]) Get(id string) (Session[T], error) {
+func (s *MemorySessionStore) Get(id string) (Session, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	value, ok := s.store[id]
 	if !ok {
-		return NewSession[T](), errors.New("not found")
+		return New(), errors.New("not found")
 	}
 
 	return value, nil
 }
 
-func (s *MemorySessionStore[T]) Set(id string, sess Session[T]) error {
+func (s *MemorySessionStore) Set(id string, sess Session) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.store[id] = sess
 	return nil
 }
 
-func (s *MemorySessionStore[T]) Del(id string) error {
+func (s *MemorySessionStore) Del(id string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	delete(s.store, id)
 	return nil
 }
 
-func (s *MemorySessionStore[T]) Clear() error {
+func (s *MemorySessionStore) Clear() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	s.store = make(map[string]Session[T])
+	s.store = make(map[string]Session)
 	return nil
 }
