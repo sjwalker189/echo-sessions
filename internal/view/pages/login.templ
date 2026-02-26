@@ -1,0 +1,27 @@
+
+package pages
+
+import (
+	"app/internal/view/components/form"
+	"app/internal/view/components/input"
+)
+
+type Login struct {
+	DocTitle string
+}
+
+templ (model Login) Render() {
+	<form>
+		<div>
+		@form.Label() {
+		 	Email
+		}
+		@input.Input(input.Props{
+			Type: "text",
+			Attributes: templ.Attributes{
+				"required": true,
+			},
+		})
+		</div>
+	</form>
+}

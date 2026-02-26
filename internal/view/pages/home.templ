@@ -1,0 +1,20 @@
+package pages
+
+import (
+	"app/internal/view/layout"
+	"app/internal/view/components/button"
+)
+
+type Home struct {
+	DocTitle string
+}
+
+templ (m Home) Render() {
+	@layout.Settings("Settings") {
+		@button.Button(button.Props{
+			Variant: button.VariantDefault,
+		}) {
+			Login
+		}
+	}
+}

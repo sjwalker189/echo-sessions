@@ -1,0 +1,75 @@
+package layout
+
+import (
+	"app/internal/view/components/button"
+)
+
+templ Settings(title string) {
+	<html lang="en">
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>{ title }</title>
+			<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png"/>
+			<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png"/>
+			<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png"/>
+			<link rel="manifest" href="/static/site.webmanifest"/>
+			<link rel="preconnect" href="https://fonts.googleapis.com"/>
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+			<link
+				href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700&display=swap"
+				rel="stylesheet"
+			/>
+			<link rel="stylesheet" href="/static/site.css"/>
+			<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js" async></script>
+		</head>
+		<body class="font-sans leading-normal text-gray-800 antialiased accent-blue-600">
+			<div class="pl-[270px] min-h-screen overflow-auto flex py-2 pr-2 bg-zinc-100">
+				<div class="fixed top-0 left-0 bottom-0 w-[270px] py-3 flex flex-col gap-6">
+					<div class="px-4 pt-4">
+						@button.Button(button.Props{
+							Variant: button.VariantGhost,
+							Size: button.SizeXs,
+							Class: "opacity-50 hover:opacity-100",
+						}) {
+							<a href="/">
+								// <ChevronLeftIcon :size="10" />
+								<span class="pr-2"> Back to Accelerator </span>
+							</a>
+						}
+					</div>
+
+					<div class="px-6 text-sm">
+						<nav class="grid text-zinc-700">
+							<a
+								href="/settings/profile"
+								class="rounded py-1 px-2"
+								activeClass="font-medium text-zinc-800 bg-zinc-400/10"
+							>
+								Profile
+							</a>
+							<a
+								href="/settings/organization"
+								class="rounded py-1 px-2"
+								activeClass="font-medium text-zinc-800 bg-zinc-400/10"
+							>
+								Organization
+							</a>
+							<a class="rounded py-1 px-2" href="#">Members</a>
+							<a class="rounded py-1 px-2" href="#">Billing</a>
+							<a class="rounded py-1 px-2" href="#">Clients</a>
+						</nav>
+					</div>
+				</div>
+
+				<div class="flex-1 p-1">
+					<main class="rounded-md bg-white h-full border shadow-xs overflow-auto px-4">
+						{ children... }
+					</main>
+				</div>
+			</div>
+		</body>
+	</html>
+}

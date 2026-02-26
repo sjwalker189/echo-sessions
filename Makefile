@@ -6,7 +6,7 @@ gen:
 
 build:
 	go build -o .build/app
-	
+
 css:
 	./node_modules/.bin/tailwindcss -i ./assets/site.css -o ./public/site.css
 
@@ -19,9 +19,7 @@ clean:
 
 
 migrate:
-	sqlc generate
-	goose sqlite3 ./db.sqlite -dir sql/migrations up 
-
+	goose sqlite3 ./db.sqlite -dir sql/migrations up
 
 #
 # Development tasks
@@ -32,7 +30,7 @@ live/templ:
 
 live/server:
 	go tool air
-	
+
 live/sync_assets:
 	go tool air \
 		--build.cmd "templ generate --notify-proxy" \
@@ -44,5 +42,5 @@ live/sync_assets:
 live/css:
 	./node_modules/.bin/tailwindcss -i ./assets/site.css -o ./public/site.css --watch
 
-dev: 
+dev:
 	make -j5 live/templ live/server live/sync_assets #live/css

@@ -1,0 +1,7 @@
+{
+  "componentsDir": "internal/view/components",
+  "utilsDir": "internal/view/utils",
+  "moduleName": "app",
+  "jsDir": "public/js",
+  "jsPublicPath": "/static/js"
+}
